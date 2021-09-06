@@ -1,0 +1,30 @@
+# This is a Shebang: It tells your shell which language it should run
+#!/usr/bin/env ruby 
+require 'sqlite3'
+require_relative "../config/environment.rb"
+
+# Create a table 
+# Create a table to hold students 
+sql = <<-SQL
+  CREATE TABLE IF NOT EXISTS dogs (
+  id INTEGER PRIMARY KEY,
+  name TEXT, 
+  breed TEXT
+  )
+SQL
+
+# Remember, the previous step has to run first so that `connection` is set!
+ActiveRecord::Base.connection.execute(sql) 
+
+
+dog = Dog.find_or_create_by(name: "Teddy", breed: "Cockapoo")
+p dog.name
+#=> Teddy
+
+Dog.find_or_create_by(name: "Ralph", breed: "lab")
+ralph = Dog.find_by(name: "Ralph")
+p ralph.name
+#=> Ralph
+
+
+
